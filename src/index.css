@@ -94,12 +94,16 @@ body {
   font-size: 5rem;
   color: black;
   left: 20%;
+  padding: 0;
+  margin: 0;
 }
 .h1admin {
   font-family: "Viaoda Libre", cursive;
   font-size: 5rem;
   color: #410000;
   left: 20%;
+  padding: 0;
+  margin: 0;
 }
 
 .header2 a {
