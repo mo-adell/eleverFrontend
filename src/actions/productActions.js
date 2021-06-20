@@ -80,7 +80,41 @@ export const deleteProduct = (productId) => async (dispatch, getState) => {
     userSignin: { userInfo },
   } = getState()
   try {
-    const { data } = Axios.delete(`${url}/products/${productId}`, {
+    const { data } = Axios.delete(`${url}/products/deleteproduct/${productId}`, {
+      headers: { Authorization: `Bearer ${userInfo.token}` },
+    })
+    dispatch({ type: PRODUCT_DELETE_SUCCESS, payload: data })
+  } catch (error) {
+    const message = error.response && error.response.data.message ? error.response.data.message : error.message
+    dispatch({ type: PRODUCT_DELETE_FAIL, payload: message })
+  }
+}
+
+///deleting product by admin
+export const deleteProductSubcategory = (productId) => async (dispatch, getState) => {
+  dispatch({ type: PRODUCT_DELETE_REQUEST, payload: productId })
+  const {
+    userSignin: { userInfo },
+  } = getState()
+  try {
+    const { data } = Axios.delete(`${url}/products/deletesubcategory/${productId}`, {
+      headers: { Authorization: `Bearer ${userInfo.token}` },
+    })
+    dispatch({ type: PRODUCT_DELETE_SUCCESS, payload: data })
+  } catch (error) {
+    const message = error.response && error.response.data.message ? error.response.data.message : error.message
+    dispatch({ type: PRODUCT_DELETE_FAIL, payload: message })
+  }
+}
+
+//deleting product by admin
+export const deleteProductCategory = (productId) => async (dispatch, getState) => {
+  dispatch({ type: PRODUCT_DELETE_REQUEST, payload: productId })
+  const {
+    userSignin: { userInfo },
+  } = getState()
+  try {
+    const { data } = Axios.delete(`${url}/products/deletecategory/${productId}`, {
       headers: { Authorization: `Bearer ${userInfo.token}` },
     })
     dispatch({ type: PRODUCT_DELETE_SUCCESS, payload: data })

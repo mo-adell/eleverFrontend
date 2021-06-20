@@ -1,6 +1,8 @@
 import React, { useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { listCategories, deleteCategory } from "../actions/categoryActions"
+import { deleteProductCategory } from "../actions/productActions"
+import { deleteRelatedSubs } from "../actions/subcategoryActions"
 import LoadingBox from "../components/LoadingBox"
 import MessageBox from "../components/MessageBox"
 import { CATEGORY_DELETE_RESET } from "../constants/categoryConstants"
@@ -30,6 +32,8 @@ export default function CategoryListScreen(props) {
   const deleteHandler = (category) => {
     if (window.confirm("Are you sure to delete?")) {
       dispatch(deleteCategory(category._id))
+      dispatch(deleteRelatedSubs(category._id)) ///deleting subcategories in this category
+      dispatch(deleteProductCategory(category._id)) ///deleting products in this category
     }
   }
   const pushme = () => {

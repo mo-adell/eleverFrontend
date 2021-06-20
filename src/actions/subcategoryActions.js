@@ -6,7 +6,6 @@ const url = "https://elever-store.herokuapp.com"
 //// sending request to get our categories
 
 export const listSubcategories = () => async (dispatch) => {
-  console.log("here is list")
   dispatch({
     type: SUBCATEGORY_LIST_REQUEST,
   })
@@ -22,7 +21,7 @@ export const listSubcategories = () => async (dispatch) => {
 
 export const detailsSubcategory = (subcategoryId) => async (dispatch) => {
   dispatch({ type: SUBCATEGORY_DETAILS_REQUEST, payload: subcategoryId })
-  console.log("here is details")
+
   try {
     const { data } = await Axios.get(`${url}/subcategories/${subcategoryId}`)
     dispatch({ type: SUBCATEGORY_DETAILS_SUCCESS, payload: data })
@@ -81,7 +80,24 @@ export const deleteSubcategory = (subcategoryId) => async (dispatch, getState) =
     userSignin: { userInfo },
   } = getState()
   try {
-    const { data } = Axios.delete(`${url}/subcategories/${subcategoryId}`, {
+    const { data } = Axios.delete(`${url}/subcategories/deletesub/${subcategoryId}`, {
+      headers: { Authorization: `Bearer ${userInfo.token}` },
+    })
+    dispatch({ type: SUBCATEGORY_DELETE_SUCCESS, payload: data })
+  } catch (error) {
+    const message = error.response && error.response.data.message ? error.response.data.message : error.message
+    dispatch({ type: SUBCATEGORY_DELETE_FAIL, payload: message })
+  }
+}
+
+///deleting subcategory when its category is deleted by admin
+export const deleteRelatedSubs = (subcategoryId) => async (dispatch, getState) => {
+  dispatch({ type: SUBCATEGORY_DELETE_REQUEST, payload: subcategoryId })
+  const {
+    userSignin: { userInfo },
+  } = getState()
+  try {
+    const { data } = Axios.delete(`${url}/subcategories/deleterelsubs/${subcategoryId}`, {
       headers: { Authorization: `Bearer ${userInfo.token}` },
     })
     dispatch({ type: SUBCATEGORY_DELETE_SUCCESS, payload: data })

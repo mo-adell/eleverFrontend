@@ -5,6 +5,7 @@ import { listSubcategories, deleteSubcategory } from "../actions/subcategoryActi
 import LoadingBox from "../components/LoadingBox"
 import MessageBox from "../components/MessageBox"
 import { SUBCATEGORY_DELETE_RESET } from "../constants/subcategoryConstants"
+import { deleteProductSubcategory } from "../actions/productActions"
 
 export default function SubcategoryListScreen(props) {
   const [start, setStart] = useState(true) ////to push the full list on page start
@@ -36,6 +37,7 @@ export default function SubcategoryListScreen(props) {
   const deleteHandler = (subcategory) => {
     if (window.confirm("Are you sure to delete?")) {
       dispatch(deleteSubcategory(subcategory._id))
+      dispatch(deleteProductSubcategory(subcategory._id)) ///deleting products in this subcategory
     }
   }
 
