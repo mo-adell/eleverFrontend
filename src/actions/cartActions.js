@@ -2,6 +2,7 @@ import Axios from "axios"
 import { CART_ADD_ITEM, CART_REMOVE_ITEM, CART_SAVE_SHIPPING_ADDRESS } from "../constants/cartConstants"
 
 const url = "https://elever-store.herokuapp.com"
+const x = 6
 
 ////Adding Item to cart & sending it to local storage
 
